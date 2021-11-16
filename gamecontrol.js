@@ -1,3 +1,4 @@
+const pol = document.getElementById("triviaoptions");
 
 let rightAnswer,
 rightNumber = 0;
@@ -5,7 +6,7 @@ wrongNumber = 0;
 
 const querystring = window.location.search;
 const params = new URLSearchParams(querystring);
-let page = params.get('load'); 
+let page = params.get('load');
 
 document.addEventListener('DOMContentLoaded',function(){
     if(page == "hist")
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded',function(){
         eventListeners();
         
     };
-
+});
 
 eventListeners = () =>{
     document.querySelector('#check').addEventListener('click',validateAnswer);
@@ -33,10 +34,9 @@ eventListeners = () =>{
 
 }
 
-addQuestion = (index)=> {
+addQuestion = (category)=> {
 
-    // const url = `https://opentdb.com/api.php?amount=10&category=23`;
-    const url = `https://opentdb.com/api.php?amount=10&category=${index}`;
+    const url = `https://opentdb.com/api.php?amount=10&category=${category}`;
     fetch(url)
     .then(data => data.json())
     .then(result => showQuestion(result.results));
@@ -44,8 +44,6 @@ addQuestion = (index)=> {
 
 
 showQuestion = questions =>{
-
-    console.log('showing question starts');
 
     const questionHTML = document.createElement('div');
     questionHTML.classList.add('col-12');
@@ -57,13 +55,13 @@ questions.forEach(question=> {
    possibleAnswers.splice(Math.floor(Math.random()*3),0,rightAnswer);
 
    questionHTML.innerHTML= `<div class="row justify-content-between heading">
-   <p class="category">Category:${question.category}<p>
+   <p class="category">Category: ${question.category}<p>
    <div class="scores">
    <span class="badge badge-primary">${rightNumber}</span>
    <span class="badge badge-warning">${wrongNumber}</span>
    </div>
    <div>
-   <h2 class-"text-center">${question.question};`
+   <h2 class-"text-center">${question.question}`;
 
     const answerDiv = document.createElement('div');
     answerDiv.classList.add('questions', 'row','justify-content-around','mt-5');
@@ -76,7 +74,11 @@ questions.forEach(question=> {
 
         answerHTML.onclick = selectAnswer;
 
+
+
+
         answerDiv.appendChild(answerHTML);
+
    
     })
 
@@ -128,19 +130,13 @@ verifyAnswer = () =>{
 
 
     const app = document.querySelector('#application');
-    while (app.firstChild) {
-        console.log('removing children');
-        app.removeChild(app.firstChild);
-
-      
-    }
-
-    addQuestion();
+    while(app.firstChild)
+{app.removeChild(app.firstChild);
 }
 
+addQuestion();
+
 }
-
-
 
 
 
