@@ -11,7 +11,7 @@ let int = setInterval(blurring, 70);
 function blurring() {
     load++;
 
-    console.log(loadText);
+    
 
     if (load > 99) {
         clearInterval(int);

@@ -8,10 +8,24 @@ const params = new URLSearchParams(querystring);
 let page = params.get('load'); 
 
 document.addEventListener('DOMContentLoaded',function(){
-    addQuestion();
+    if(page == "hist")
+    {
+        addQuestion(23);
+        eventListeners();
+        console.log('hist')
+    }
+    else if(page == "pol")
+    {
+        addQuestion(24);
+        eventListeners();
+    }
+    else if(page == 'sport')
+    {
+        addQuestion(21);
+        eventListeners();
+        
+    };
 
-    eventListeners();
-});
 
 eventListeners = () =>{
     document.querySelector('#check').addEventListener('click',validateAnswer);
@@ -19,16 +33,10 @@ eventListeners = () =>{
 
 }
 
-// eventListeners = () =>{
-//     document.querySelector('#check').addEventListener('click',validateAnswer);
+addQuestion = (index)=> {
 
-
-// }
-
-addQuestion = (category)=> {
-
-    const url = `https://opentdb.com/api.php?amount=10&category=23`;
-    // const url = `https://opentdb.com/api.php?amount=10&category=${category}`;
+    // const url = `https://opentdb.com/api.php?amount=10&category=23`;
+    const url = `https://opentdb.com/api.php?amount=10&category=${index}`;
     fetch(url)
     .then(data => data.json())
     .then(result => showQuestion(result.results));
@@ -68,11 +76,7 @@ questions.forEach(question=> {
 
         answerHTML.onclick = selectAnswer;
 
-
-
-
         answerDiv.appendChild(answerHTML);
-
    
     })
 
@@ -127,11 +131,16 @@ verifyAnswer = () =>{
     while (app.firstChild) {
         console.log('removing children');
         app.removeChild(app.firstChild);
+
+      
     }
 
-addQuestion();
+    addQuestion();
+}
 
 }
+
+
 
 
 
